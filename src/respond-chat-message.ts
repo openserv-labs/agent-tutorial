@@ -9,12 +9,12 @@ export async function respondChatMessage(action: RespondChatMessageAction) {
     const workspaceId = action.workspace.id;
     const agentId = action.me.id;
     const agentName = action.me.name;
-    const latestMessageId = action.messages.at(-1)?.id;
+    const latestMessage = action.messages.at(-1)?.message;
+    // Use the latest message to determine the response or use action.messages to get all messages
 
-    // Do something with the action
-
+    // Respond to the chat
     const body: SendChatMessageRequestBody = {
-      message: "This is the message I want to send to the platform",
+      message: "This is the message I want to send to the platform", // this is where you can put your response
       agentId: agentId,
     };
 

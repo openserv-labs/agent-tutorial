@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import { doTask } from "./do-task";
 import { Action } from "./interfaces";
 import { respondChatMessage } from "./respond-chat-message";
 
@@ -13,17 +14,16 @@ app.post("/", async (req, res) => {
 
   switch (action.type) {
     case "do-task": {
-      // TODO: Implement do-task handler
-      res.json({ message: "OK" });
+      doTask(action);
       break;
     }
 
     case "respond-chat-message": {
       void respondChatMessage(action);
-      res.json({ message: "OK" });
       break;
     }
   }
+  res.json({ message: "OK" });
 });
 
 app.listen(PORT, () => {
