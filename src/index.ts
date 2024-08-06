@@ -1,16 +1,15 @@
 import "dotenv/config";
 import express from "express";
+import { Action } from "./interfaces";
 import { respondChatMessage } from "./respond-chat-message";
-import { actionSchema } from "./schemas";
 
 const app = express();
 const PORT = process.env.PORT || 3005;
 
-// Middleware to parse JSON bodies
 app.use(express.json());
 
 app.post("/", async (req, res) => {
-  const action = actionSchema.parse(req.body);
+  const action = req.body as Action;
 
   switch (action.type) {
     case "do-task": {
@@ -21,11 +20,10 @@ app.post("/", async (req, res) => {
 
     case "respond-chat-message": {
       void respondChatMessage(action);
+      res.json({ message: "OK" });
       break;
     }
   }
-
-  return "OK";
 });
 
 app.listen(PORT, () => {
