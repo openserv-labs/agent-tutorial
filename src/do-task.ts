@@ -23,13 +23,11 @@ export async function doTask(action: DoTaskAction) {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o",
       messages,
     });
 
     const result = completion.choices[0].message?.content || "No response";
-
-    console.log("OpenAI response:", result);
 
     await apiClient.put(`/workspaces/${workspaceId}/tasks/${taskId}/complete`, {
       output: result,
