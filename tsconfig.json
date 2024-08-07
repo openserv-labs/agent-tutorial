@@ -9,8 +9,8 @@
     "resolveJsonModule": true,
     "moduleDetection": "force",
     "outDir": "./dist",
-    "rootDir": "./src"
+    "rootDir": "."
   },
-  "include": ["src"],
+  "include": ["src", "lib"],
   "exclude": ["node_modules"]
 }

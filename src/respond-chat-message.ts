@@ -1,8 +1,8 @@
-import { apiClient } from "./api";
+import { apiClient } from "../lib/api";
 import {
   RespondChatMessageAction,
   SendChatMessageRequestBody,
-} from "./interfaces";
+} from "../lib/interfaces";
 
 export async function respondChatMessage(action: RespondChatMessageAction) {
   try {

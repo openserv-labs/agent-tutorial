@@ -1,10 +1,7 @@
 import FormData from "form-data";
-import fs from "fs";
 import OpenAI from "openai";
-import path from "path";
-import { systemPrompt } from "./agent-system-prompt";
-import { apiClient } from "./api";
-import { DoTaskAction } from "./interfaces";
+import { apiClient } from "../lib/api";
+import { DoTaskAction } from "../lib/interfaces";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -20,10 +17,15 @@ export async function doTask(action: DoTaskAction) {
 
   // Prepare the messages to send to the OpenAI API
   const messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
-    { role: "system", content: systemPrompt },
+    {
+      role: "system",
+      content: `Summarize the given text in exactly three sentences. Capture the main points and key insights. Ensure clarity and coherence. Use concise and straightforward language.`,
+    },
     {
       role: "user",
-      content: `Objective: ${taskObjective}\nInput: ${taskInput}\nExpected Output: ${taskExpectedOutput}`,
+      content: `Objective: ${taskObjective}
+Input: ${taskInput}
+Expected Output: ${taskExpectedOutput}`,
     },
   ];
 
@@ -36,13 +38,15 @@ export async function doTask(action: DoTaskAction) {
 
     const result = completion.choices[0].message?.content || "No response";
 
-    // Write the result to a file
-    const filePath = path.join(__dirname, `task-${taskId}-output.txt`);
-    fs.writeFileSync(filePath, result, "utf8");
+    // Create a buffer from the result string
+    const resultBuffer = Buffer.from(result, "utf-8");
 
     // Upload the file to the platform
     const form = new FormData();
-    form.append("file", fs.createReadStream(filePath));
+    form.append("file", resultBuffer, {
+      filename: `task-${taskId}-output.txt`,
+      contentType: "text/plain",
+    });
     form.append("agentId", agentId.toString());
     form.append("path", "text-summary.txt");
     form.append("taskIds", action.task.id.toString());
@@ -54,9 +58,6 @@ export async function doTask(action: DoTaskAction) {
     await apiClient.put(`/workspaces/${workspaceId}/tasks/${taskId}/complete`, {
       output: "The summary has been uploaded",
     });
-
-    // Delete the file
-    fs.unlinkSync(filePath);
   } catch (error: any) {
     console.error("Error calling OpenAI API:", error);
 

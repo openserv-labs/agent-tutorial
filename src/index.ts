@@ -1,7 +1,7 @@
 import "dotenv/config";
 import express from "express";
+import { Action } from "../lib/interfaces";
 import { doTask } from "./do-task";
-import { Action } from "./interfaces";
 import { respondChatMessage } from "./respond-chat-message";
 
 const app = express();
