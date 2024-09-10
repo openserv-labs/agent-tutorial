@@ -50,7 +50,6 @@ Expected Output: ${taskExpectedOutput}`,
       filename: `task-${taskId}-output.txt`,
       contentType: "text/plain",
     });
-    form.append("agentId", agentId.toString()); // Attach the agent's ID
     form.append("path", "text-summary.txt"); // Specify the path where the file should be saved
     form.append("taskIds", action.task.id.toString()); // Associate the file with the specific task ID
     form.append("skipSummarizer", "true"); // The platform performs some kind of file summarization, so we skip it for this demo

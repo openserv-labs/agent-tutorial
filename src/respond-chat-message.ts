@@ -18,7 +18,6 @@ export async function respondChatMessage(action: RespondChatMessageAction) {
     // Prepare the body of the response to be sent to the platform
     const body: SendChatMessageRequestBody = {
       message: "This is the message I want to send to the platform", // Replace this with the actual response message
-      agentId: agentId,
     };
 
     // Send the response message to the OpenServ platform
