@@ -22,7 +22,7 @@ To start developing on the OpenServ platform, follow these steps:
 
 ### 1. Log In to the Platform
 
-Visit [OpenServ Platform](https://platform-test.openserv.dev) and log in using your Google account. This will give you access to the developer tools and features available on the platform.
+Visit [OpenServ Platform](https://platform.openserv.ai/) and log in using your Google account. This will give you access to the developer tools and features available on the platform.
 
 ### 2. Set Up Your Developer Account
 

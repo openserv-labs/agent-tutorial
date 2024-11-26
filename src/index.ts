@@ -29,6 +29,7 @@ app.post("/", async (req, res) => {
   }
 
   // Send a JSON response indicating that the request was received successfully. This will set the task to 'in-progress' on the platform.
+  // WARNING: If your doTask function calls the /complete endpoint immediately, there's a risk of race condition here. Make sure doTask actually completes the task before calling the /complete endpoint.
   res.json({ message: "OK" });
 });
 
