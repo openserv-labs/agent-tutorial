@@ -11,7 +11,7 @@ jobs:
   sync-readmes:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout agent-example repository
+      - name: Checkout agent-tutorial repository
         uses: actions/checkout@v2
 
       - name: Checkout openserv-docs repository
