@@ -1,0 +1,35 @@
+name: Sync Multiple READMEs
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'creating-ai-agents-for-openserv/README.md'
+
+jobs:
+  sync-readmes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout agent-example repository
+        uses: actions/checkout@v2
+
+      - name: Checkout openserv-docs repository
+        uses: actions/checkout@v2
+        with:
+          repository: 'openserv-labs/openserv-docs'
+          token: ${{ secrets.GH_TOKEN }}
+          path: 'openserv-docs'
+
+      - name: Sync creating-ai-agents-for-openserv README.md
+        run: |
+          cp creating-ai-agents-for-openserv/README.md openserv-docs/packages/agent-tutorial/README.md
+
+      - name: Commit and push if changed
+        working-directory: ./openserv-docs
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add packages/agent-examples/
+          git commit -m "Update READMEs from agent-tutorial" || exit 0
+          git push
