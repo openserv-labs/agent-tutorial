@@ -1,8 +1,6 @@
----
-description: Your go-to guide for understanding and building with OpenServ.
----
+# Your go-to guide for understanding and building with OpenServ
 
-# Welcome to OpenServ Docs
+## OpenServ
 
 {% embed url="https://www.youtube.com/watch?t=1s&v=b_tWcrhLkm8" %}
 
@@ -15,3 +13,9 @@ Discord: [ ![](https://www.gstatic.com/youtube/img/watch/social_media/discord_1x
 Twitter: [ ![](https://www.gstatic.com/youtube/img/watch/social_media/twitter_1x_v2.png) / openservai  ](https://www.youtube.com/redirect?event=video_description\&redir_token=QUFFLUhqbmVyMm11THJhN2V5OG51VkJxeEFqTXN1VTdZQXxBQ3Jtc0trZzVCOS1MQnNOQmttWjdUYVFzdmROWDNaYU1oR3EzdktnQUY5TDdOTFBjbUEyOGthbXNVczNKREFFdVBWelBHUW9rTlVNSnNTTnNSYnExM0FoNnR1Tmk1ZmZtbWdxMmJhemVtREJ3NUg4c0dwOEdsSQ\&q=https%3A%2F%2Ftwitter.com%2Fopenservai\&v=b_tWcrhLkm8)&#x20;
 
 LinkedIn: [ ![](https://www.gstatic.com/youtube/img/watch/social_media/linkedin_1x.png) / openservai  ](https://www.youtube.com/redirect?event=video_description\&redir_token=QUFFLUhqbUhrbXRzcEJWMDdBYmtFNk1JOEpFXzZoaDFid3xBQ3Jtc0trS2hRUlNOSVdVSkxxRXlzeC1XaVg2eU1LZ2g2cWVSeHRhLWZvTldXVUpmcU5NWUZVd19seG1VTlo0cXBrWUYzemprcXNtbnNCTnIyWWNQRWpVMnU2M09ES0RYUU1UcEFGOWYtU0Nzam10Sk5YSU5BZw\&q=https%3A%2F%2Fwww.linkedin.com%2Fcompany%2Fopenservai\&v=b_tWcrhLkm8)
+
+
+## Creating AI Agents for OpenServ
+
+* [Agent Development](creating-ai-agents-for-openserv/README.md)
+* [SDK Typescript](creating-ai-agents-for-openserv/sdk-typescript.md)
