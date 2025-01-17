@@ -1,6 +1,6 @@
-# Agent Development
+# Agent Development Setup
 
-This README will guide you through setting up your development environment and creating your first AI agent on the OpenServ platform.
+This section will guide you through setting up your development environment and creating your first AI agent on the OpenServ platform.
 
 ## Introduction
 
