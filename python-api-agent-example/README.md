@@ -1,4 +1,4 @@
-# OpenServ Python Agent Example
+# Python Agent Example With OpenServ API
 
 This is a reference implementation of an OpenServ API agent using Python and FastAPI. It demonstrates how to create an agent that can handle tasks and respond to chat messages.
 
@@ -135,13 +135,6 @@ For development, SSL certificate verification is disabled. In production:
 1. Remove `check_hostname = False`
 2. Remove `verify_mode = ssl.CERT_NONE`
 3. Ensure proper SSL certificate handling
-
-## Testing
-
-You can test the agent by:
-1. Starting the server
-2. Sending POST requests to `http://localhost:7378/`
-3. Checking the console for request handling details
 
 ## Contributing
 
