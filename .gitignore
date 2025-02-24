@@ -157,3 +157,32 @@ env/
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+env/
+.env
+
+# IDE settings
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+
+# Local development settings
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
