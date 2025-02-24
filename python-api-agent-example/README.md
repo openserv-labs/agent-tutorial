@@ -9,7 +9,7 @@ This is a reference implementation of an OpenServ API agent using Python and Fas
 - File upload functionality
 - Error handling and reporting
 - Asynchronous task management
-- SSL certificate handling
+- SSL certificate handling with certifi
 
 ## Project Structure
 
@@ -56,7 +56,8 @@ PORT=7378  # Optional, defaults to 7378
 
 Start the FastAPI server:
 ```bash
-python3 -m src.main
+cd python-api-agent-example
+PYTHONPATH=$PYTHONPATH:. python3 -m uvicorn src.main:app --reload --port 7378
 ```
 
 ## Implementation Details
@@ -84,7 +85,7 @@ await api_client.upload_file(
 # Complete task
 await api_client.put(
     f"/workspaces/{workspace_id}/tasks/{task_id}/complete",
-    {'output': result}
+    {'output': "The summary has been uploaded"}
 )
 ```
 
@@ -98,11 +99,25 @@ Chat message handling in `respond_chat_message.py`:
 ### API Client Features
 
 The `api.py` client includes:
-- SSL certificate handling
-- Session management
+- SSL certificate handling with certifi
+- Session management with aiohttp
 - File upload utilities
 - Error handling
 - Response parsing
+
+### SSL Certificate Handling
+
+The application uses `certifi` for proper SSL certificate verification:
+```python
+import ssl
+import certifi
+
+ssl_context = ssl.create_default_context(cafile=certifi.where())
+connector = aiohttp.TCPConnector(ssl=ssl_context)
+session = aiohttp.ClientSession(connector=connector)
+```
+
+This ensures secure communication with the OpenServ API while maintaining compatibility across different platforms.
 
 ### Error Handling
 
@@ -129,12 +144,7 @@ The application uses:
 - aiohttp for async HTTP requests
 - OpenAI's Python client
 - Asynchronous task handling
-
-### SSL Notes
-For development, SSL certificate verification is disabled. In production:
-1. Remove `check_hostname = False`
-2. Remove `verify_mode = ssl.CERT_NONE`
-3. Ensure proper SSL certificate handling
+- certifi for SSL certificate verification
 
 ## Contributing
 
