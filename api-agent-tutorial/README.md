@@ -10,7 +10,9 @@ We will guide you through from setting up your environment to deploying and test
 
 Before diving into the code, there are a few setup steps to complete:
 
-### 1. **Expose your local server**: To allow OpenServ to access your agent during local development, use a tunneling tool like [ngrok](https://ngrok.com/) or [localtunnel](https://github.com/localtunnel/localtunnel). A tunneling is a software utility that exposes a local server on your machine to the internet through a secure public URL, making it useful for testing webhooks, APIs, or services in a local development environment. In this case, to connect your agent being developed on your local machine to the OpenServ platform.
+### 1. **Expose your local server**: 
+
+To allow OpenServ to access your agent during local development, use a tunneling tool like [ngrok](https://ngrok.com/) or [localtunnel](https://github.com/localtunnel/localtunnel). A tunneling is a software utility that exposes a local server on your machine to the internet through a secure public URL, making it useful for testing webhooks, APIs, or services in a local development environment. In this case, to connect your agent being developed on your local machine to the OpenServ platform.
 
 Example using ngrok:
 
