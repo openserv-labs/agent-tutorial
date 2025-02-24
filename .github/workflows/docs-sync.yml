@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'creating-ai-agents-for-openserv/README.md'
+      - 'api-agent-tutorial/README.md'
 
 jobs:
   sync-readmes:
