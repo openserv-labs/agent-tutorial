@@ -8,7 +8,7 @@ Join us on a mission to empower everyone, everywhere, to achieve anything—driv
 
 ## Example Implementations
 
-We provide reference implementations in multiple languages to help you get started quickly:
+We provide reference implementations in different languages to help you get started quickly:
 
 ### TypeScript Example
 Check out our [TypeScript Agent Example](ts-api-agent-example/README.md) featuring:
@@ -26,7 +26,7 @@ Explore our [Python Agent Example](python-api-agent-example/README.md) featuring
 - OpenAI integration
 - SSL certificate handling
 - File upload functionality
-- Robust error handling
+- Error handling
 
 Both examples demonstrate:
 - Task handling with OpenAI

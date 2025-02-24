@@ -1,15 +1,15 @@
 # Python Agent Example With OpenServ API
 
-This is a reference implementation of an OpenServ API agent using Python and FastAPI. It demonstrates how to create an agent that can handle tasks and respond to chat messages.
+This is a reference implementation of OpenServ API agent using Python and FastAPI. It demonstrates how to create an agent that can handle tasks and respond to chat messages.
 
 ## Features
 
-- Task handling with OpenAI integration
+- Task handling with OpenAI API
 - Chat message responses
 - File upload functionality
 - Error handling and reporting
 - Asynchronous task management
-- SSL certificate handling with certifi
+- SSL certificate handling with certificate
 
 ## Project Structure
 
@@ -42,6 +42,8 @@ source venv/bin/activate  # On Windows use: venv\Scripts\activate
 2. Install dependencies:
 ```bash
 pip install -r requirements.txt
+pip install --upgrade pip
+pip install --upgrade openai
 ```
 
 3. Create a `.env` file with your credentials:

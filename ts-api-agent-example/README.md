@@ -4,7 +4,7 @@ This is a reference implementation of an OpenServ API agent using TypeScript. It
 
 ## Features
 
-- Task handling with OpenAI integration
+- Task handling with OpenAI API
 - Chat message responses
 - File upload functionality
 - Error handling and reporting
