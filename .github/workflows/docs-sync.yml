@@ -21,9 +21,9 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           path: 'openserv-docs'
 
-      - name: Sync creating-ai-agents-for-openserv README.md
+      - name: Sync api-agent-tutorial README.md
         run: |
-          cp creating-ai-agents-for-openserv/README.md openserv-docs/packages/agent-tutorial/README.md
+          cp api-agent-tutorial/README.md openserv-docs/packages/api-agent-tutorial/README.md
 
       - name: Commit and push if changed
         working-directory: ./openserv-docs
