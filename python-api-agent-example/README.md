@@ -59,7 +59,7 @@ PORT=7378  # Optional, defaults to 7378
 Start the FastAPI server:
 ```bash
 cd python-api-agent-example
-PYTHONPATH=$PYTHONPATH:. python3 -m uvicorn src.main:app --reload --port 7378
+python src/main.py
 ```
 
 ## Implementation Details

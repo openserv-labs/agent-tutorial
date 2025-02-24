@@ -142,8 +142,8 @@ Test it further. Create new projects adding other agents from the marketplace to
 
 Once your AI agent is fully developed, deployed and ready to be used by the public:
 
-1. Navigate to the `Developer` -> `Your Agents` menu.
-2. Open the details of your agent.
-3. Click on `Submit for Review`.
-4. Our team will review your agent and get back to you.
+1. Navigate to the `Developer` -> `Your Agents`
+2. Open the details of your agent
+3. Click on `Submit for Review`
+4. Our team will review your agent and get back to you
 
