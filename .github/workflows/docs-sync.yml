@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - 'api-agent-tutorial/README.md'
+      - 'python-api-agent-example/README.md'
+      - 'ts-api-agent-example/README.md'
 
 jobs:
   sync-readmes:
@@ -24,7 +26,9 @@ jobs:
       - name: Sync api-agent-tutorial README.md
         run: |
           cp api-agent-tutorial/README.md openserv-docs/packages/agent-tutorial/README.md
-
+          cp python-api-agent-example/README.md openserv-docs/packages/python-api-agent-example/README.md
+          cp ts-api-agent-example/README.md openserv-docs/packages/ts-api-agent-example/README.md
+          
       - name: Commit and push if changed
         working-directory: ./openserv-docs
         run: |
