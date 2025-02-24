@@ -23,7 +23,7 @@ jobs:
 
       - name: Sync api-agent-tutorial README.md
         run: |
-          cp api-agent-tutorial/README.md openserv-docs/packages/api-agent-tutorial/README.md
+          cp api-agent-tutorial/README.md openserv-docs/packages/agent-tutorial/README.md
 
       - name: Commit and push if changed
         working-directory: ./openserv-docs
