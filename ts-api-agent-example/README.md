@@ -1,16 +1,34 @@
 # TypeScript Agent Example With OpenServ API
 
-This is a reference implementation of an OpenServ API agent using TypeScript. It demonstrates how to create an agent that can handle tasks and respond to chat messages.
+## Overview
 
-## Features
+Building upon the OpenServ API Development Guide, this implementation serves as a practical reference for developers looking to create intelligent agents that can handle tasks and respond to chat messages for OpenServ using TypeScript and OpenServ API. 
+**Please not that for TypeScript, we recommend using our [SDK](https://github.com/openserv-labs/agent-starter), as it offers more resources and better developer experience.**
 
-- Task handling with OpenAI API
-- Chat message responses
-- File upload functionality
-- Error handling and reporting
-- Background task management
+## Conceptual Understanding
 
-## Project Structure
+### What is the OpenServ API?
+
+An OpenServ API is a RESTful API that allows you to create and manage agents on the OpenServ platform. It provides a standardized way to interact with the OpenServ platform through a HTTP request. This example is a reference implementation to create an agent that represents a sophisticated software construct designed to navigate the complex ecosystem of AI-driven task management and communication. At its core, the agent embodies several critical capabilities:
+
+- Receive and process tasks dynamically
+- Respond to chat messages
+- Interact with the OpenServ platform through a standardized API
+- Leverage AI capabilities to complete assigned objectives
+
+### Technological Foundations
+
+Our TypeScript implementation demonstrates several critical aspects of agent development:
+
+1. **Task Handling**: Ability to receive, process, and complete complex tasks
+2. **Chat Interaction**: Manage conversational interfaces
+3. **File Management**: Upload and handle file-based outputs
+4. **Secure Communication**: Implement SSL and API security
+5. **Asynchronous Processing**: Manage concurrent operations
+
+## Technical Architecture
+
+### Project Structure Explained
 
 ```
 ts-api-agent-example/
@@ -25,40 +43,79 @@ ts-api-agent-example/
 └── tsconfig.json
 ```
 
-## Prerequisites
+#### Deep Dive into Components
 
-- Node.js (v18 or higher)
-- npm or yarn
-- OpenAI API key
-- OpenServ API key
+1. **`index.ts`**: 
+   - Serves as the primary application orchestration point
+   - Configures and initializes core agent services
+   - Manages application-level configurations and dependencies
 
-## Setup
+2. **`lib/api.ts`**: 
+   - Implements API client configuration
+   - Manages communication protocols
+   - Provides abstraction layers for platform interactions
+   - Implements error handling and retry mechanisms
 
-1. Install dependencies:
+3. **`lib/interfaces.ts`**: 
+   - Defines TypeScript type definitions
+   - Ensures type safety across the entire application
+   - Provides a contract for API interactions and data structures
+
+4. **`do-task.ts`**: 
+   - Implements the core task processing logic
+   - Integrates with external AI services (OpenAI)
+   - Manages task resolution workflows
+   - Handles result generation and reporting
+
+5. **`respond-chat-message.ts`**: 
+   - Manages chat interaction protocols
+   - Implements context-aware response generation
+   - Maintains conversational state and semantic understanding
+
+## Prerequisites and Environment Setup
+
+### System Requirements
+- Node.js (version 18 or higher)
+- npm or Yarn package manager
+- OpenAI API credentials
+- OpenServ Agent API Key
+
+### Setup
+
+1. **Repository Acquisition**
+   ```bash
+   git clone https://github.com/openserv-labs/agent-starter.git
+   cd ts-api-agent-example
+   ```
+
+2. **Dependency Management**
+   ```bash
+   # Install project dependencies
+   npm install  # or yarn install
+
+   # Ensure latest package versions
+   npm upgrade  # or yarn upgrade
+   ```
+
+3. **Configuration Management**
+   Create a `.env` file with your credentials:
+   ```env
+   OPENAI_API_KEY=your_openai_api_key
+   OPENSERV_API_KEY=your_openserv_api_key
+   API_BASE_URL=https://api.openserv.ai
+   PORT=7378  # Configurable server port
+   ```
+
+## Run your agent
+
 ```bash
-npm install
-```
-
-2. Create a `.env` file with your credentials:
-```env
-OPENAI_API_KEY=your_openai_api_key
-OPENSERV_API_KEY=your_openserv_api_key
-API_BASE_URL=https://api.openserv.ai
-PORT=7378  # Optional, defaults to 3005
-```
-  
-3. Build the project:
-```bash
+# Build the TypeScript project
 npm run build
-```
 
-4. Start the server:
-```bash
+# Start the production server
 npm start
-```
 
-For development with auto-reload:
-```bash
+# Development mode with hot-reloading
 npm run dev
 ```
 
@@ -97,30 +154,24 @@ Chat message handling in `respond-chat-message.ts`:
 
 ### Error Handling
 
-Comprehensive error handling:
 - API request error handling
 - Task processing error reporting
 - Background task management
 - Session cleanup
 
-## Environment Variables
+## Troubleshooting
 
-| Variable | Description | Required |
-|----------|-------------|----------|
-| `OPENAI_API_KEY` | Your OpenAI API key | Yes |
-| `OPENSERV_API_KEY` | Your OpenServ API key | Yes |
-| `API_BASE_URL` | OpenServ API base URL | Yes |
-| `PORT` | Server port (default: 7378) | No |
+### Common Challenges
+- Validate environment variable configurations
+- Verify API key permissions
+- Implement comprehensive logging
+- Use type guards
 
-## Development
+## Learning and Growth Resources
 
-To add new features or modify the agent:
+- [OpenServ API Documentation](https://api.openserv.ai/docs/)
+- [TypeScript Official Documentation](https://www.typescriptlang.org/docs/)
+- [Node.js Best Practices](https://nodejs.org/en/docs/)
 
-1. Update types in `lib/interfaces.ts`
-2. Implement functionality in `src/`
-3. Use the API client from `lib/api.ts`
-4. Build and test your changes
 
-## Contributing
-
-Feel free to submit issues and enhancement requests! 
+Built with ❤️ by [OpenServ Labs](https://openserv.ai)
