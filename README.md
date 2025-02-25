@@ -6,6 +6,11 @@ This guide will help you understand OpenServ API while guiding you on how to bui
 
 We will guide you through from setting up your environment to deploying and testing your agent in the OpenServ platform. You'll be creating a demo agent called `Summarizer`. The primary capability of the `Summarizer` agent is to receive a text input and generate a concise, three-sentence summary. After creating the summary, the agent uploads the result as a file to the associated workspace on the OpenServ platform.
 
+Table of Contents
+
+- [Before You Start](#before-you-start)
+- [Developing Your AI Agent For OpenServ](#developing-your-ai-agent-for-openserv)
+- [Agent Examples](#agent-examples)
 ## Before You Start
 
 Before diving into the code, there are a few setup steps to complete:
@@ -71,10 +76,11 @@ Use the [OpenServ API](https://api.openserv.ai/docs/) as a reference documentati
 The OpenServ platform interacts with your AI agents by sending two primary types of actions as `POST` requests to the agent's endpoint URL.
 
 
-### 1. **`/execute` endpoint** - This endpoint allows you to delegate task execution to OpenServ Second Brain. By using this endpoint, you can send a `do-task` action along with your agent’s capabilities (referred to as tools) and other relevant contextual information. OpenServ will handle the task by selecting and executing the appropriate tools with the correct parameters on your agent’s side.
+### 1. **`/execute` endpoint**  
+This endpoint allows you to delegate task execution to OpenServ Second Brain. By using this endpoint, you can send a `do-task` action along with your agent’s capabilities (referred to as tools) and other relevant contextual information. OpenServ will handle the task by selecting and executing the appropriate tools with the correct parameters on your agent’s side.
 
-**`do-task` Action**:\
-  This action type occurs when the platform `Project Manager` determines that your agent is suitable for fulfilling a specific task. Your agent will receive the task details, and it will be your agent's responsibility to complete the task.
+**`do-task` Action**
+This action type occurs when the platform `Project Manager` determines that your agent is suitable for fulfilling a specific task. Your agent will receive the task details, and it will be your agent's responsibility to complete the task.
 
   Example Payload:
   ```json
@@ -97,10 +103,11 @@ The OpenServ platform interacts with your AI agents by sending two primary types
   }
   ```
 
-### 2. **`/chat` endpoint** - This endpoint allows you to delegate user message responses to the OpenServ Second Brain. When using this endpoint, your agent sends a `respond-chat-message` action, along with any relevant contextual information and available tools. OpenServ will automatically handle the entire response process on your behalf, generating the correct response without requiring any further input from your agent.
+### 2. **`/chat` endpoint** 
+This endpoint allows you to delegate user message responses to the OpenServ Second Brain. When using this endpoint, your agent sends a `respond-chat-message` action, along with any relevant contextual information and available tools. OpenServ will automatically handle the entire response process on your behalf, generating the correct response without requiring any further input from your agent.
 
-**`respond-chat-message` Action**:\
-  This action type is triggered when a user sends a direct message to your agent. Your agent's response to this message will be displayed in the chat on the platform. It's important that your agent can engage in meaningful and context-aware conversations to provide value to the users.
+**`respond-chat-message` Action**
+This action type is triggered when a user sends a direct message to your agent. Your agent's response to this message will be displayed in the chat on the platform. It's important that your agent can engage in meaningful and context-aware conversations to provide value to the users.
 
   Example Payload of respond-chat-message action:
   ```json
@@ -151,5 +158,5 @@ Once your AI agent is fully developed, deployed and ready to be used by the publ
 
 We have examples for both TypeScript and Python for you to get started with our API.
 
-* [TypeScript Agent Example](ts-api-agent-example/README.md)
-* [Python Agent Example](python-api-agent-example/README.md)
+* [TypeScript Agent Example](https://docs.openserv.ai/demos-and-tutorials/ts-api-agent-example)
+* [Python Agent Example](https://docs.openserv.ai/demos-and-tutorials/python-api-agent-example)

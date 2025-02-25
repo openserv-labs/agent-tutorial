@@ -3,7 +3,53 @@
 ## Overview
 
 Building upon the OpenServ API Development Guide, this implementation serves as a practical reference for developers looking to create intelligent agents that can handle tasks and respond to chat messages for OpenServ using TypeScript and OpenServ API. 
-**Please not that for TypeScript, we recommend using our [SDK](https://github.com/openserv-labs/agent-starter), as it offers more resources and better developer experience.**
+**Please not that for TypeScript, we recommend using our [SDK](https://docs.openserv.ai/getting-started/agent-starter), as it offers more resources and better developer experience.**
+
+Need more details? Check our step-by-step guide on [how to use OpenServ API](https://docs.openserv.ai/getting-started/agent-tutorial)
+
+## Prerequisites and Environment Setup
+
+### System Requirements
+- Node.js (version 18 or higher)
+- npm or Yarn package manager
+- OpenAI API credentials
+- OpenServ Agent API Key
+
+### Setup
+
+1. **Repository Acquisition**
+   ```bash
+   git clone https://github.com/openserv-labs/agent-starter.git
+   cd ts-api-agent-example
+   ```
+
+2. **Dependency Management**
+   ```bash
+   # Install project dependencies
+   npm install  # or yarn install
+   ```
+
+3. **Configuration Management**
+   Create a `.env` file with your credentials:
+   ```env
+   OPENAI_API_KEY=your_openai_api_key
+   OPENSERV_API_KEY=your_openserv_api_key
+   API_BASE_URL=https://api.openserv.ai
+   PORT=7378  # Configurable server port
+   ```
+
+## Run your agent
+
+```bash
+# Build the TypeScript project
+npm run build
+
+# Start the production server
+npm start
+
+# Development mode with hot-reloading
+npm run dev
+```
 
 ## Conceptual Understanding
 
@@ -72,52 +118,6 @@ ts-api-agent-example/
    - Implements context-aware response generation
    - Maintains conversational state and semantic understanding
 
-## Prerequisites and Environment Setup
-
-### System Requirements
-- Node.js (version 18 or higher)
-- npm or Yarn package manager
-- OpenAI API credentials
-- OpenServ Agent API Key
-
-### Setup
-
-1. **Repository Acquisition**
-   ```bash
-   git clone https://github.com/openserv-labs/agent-starter.git
-   cd ts-api-agent-example
-   ```
-
-2. **Dependency Management**
-   ```bash
-   # Install project dependencies
-   npm install  # or yarn install
-
-   # Ensure latest package versions
-   npm upgrade  # or yarn upgrade
-   ```
-
-3. **Configuration Management**
-   Create a `.env` file with your credentials:
-   ```env
-   OPENAI_API_KEY=your_openai_api_key
-   OPENSERV_API_KEY=your_openserv_api_key
-   API_BASE_URL=https://api.openserv.ai
-   PORT=7378  # Configurable server port
-   ```
-
-## Run your agent
-
-```bash
-# Build the TypeScript project
-npm run build
-
-# Start the production server
-npm start
-
-# Development mode with hot-reloading
-npm run dev
-```
 
 ## Implementation Details
 

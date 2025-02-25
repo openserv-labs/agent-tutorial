@@ -4,64 +4,7 @@
 
 This repository provides a comprehensive example of building an AI agent for the OpenServ platform using OpenServ API, Python and FastAPI. Building upon the OpenServ API Development Guide, this implementation serves as a practical reference for developers looking to create intelligent agents that can handle tasks and respond to chat messages.
 
-## Conceptual Understanding
-
-### What is the OpenServ API?
-
-An OpenServ API is a RESTful API that allows you to create and manage agents on the OpenServ platform. It provides a standardized way to interact with the OpenServ platform through a HTTP request.
-
-- Receive and process tasks dynamically
-- Respond to chat messages
-- Interact with the OpenServ platform through a standardized API
-- Leverage AI capabilities to complete assigned objectives
-
-### Key Components of This Implementation
-
-Our Python agent demonstrates several critical aspects of agent development:
-
-1. **Task Handling**: Ability to receive, process, and complete complex tasks
-2. **Chat Interaction**: Manage conversational interfaces
-3. **File Management**: Upload and handle file-based outputs
-4. **Secure Communication**: Implement SSL and API security
-5. **Asynchronous Processing**: Manage concurrent operations
-
-## Technical Architecture
-
-### Project Structure Explained
-
-```
-python-api-agent-example/
-├── src/
-│   ├── __init__.py          # Package initialization
-│   ├── main.py              # FastAPI application entry point
-│   ├── api.py               # API client configuration
-│   ├── do_task.py           # Task handling implementation
-│   └── respond_chat_message.py  # Chat message handling
-└── requirements.txt         # Python dependencies
-```
-
-#### Deep Dive into Components
-
-1. **`main.py`**: 
-   - Serves as the primary application entry point
-   - Configures FastAPI server
-   - Sets up endpoint routes for task and chat interactions
-
-2. **`api.py`**: 
-   - Manages API client configuration
-   - Handles secure communication with OpenServ platform
-   - Implements SSL certificate management
-   - Provides utility methods for API interactions
-
-3. **`do_task.py`**: 
-   - Implements core task processing logic
-   - Handles task reception, processing, and completion
-   - Uses OpenAI API for task resolution
-
-4. **`respond_chat_message.py`**: 
-   - Manages incoming chat messages
-   - Generates contextually appropriate responses
-   - Maintains conversation state and context
+Need more details? Check our step-by-step guide on [how to use OpenServ API](https://docs.openserv.ai/getting-started/agent-tutorial)
 
 ## Prerequisites and Setup
 
@@ -120,6 +63,65 @@ cd python-api-agent-example
 # Start the FastAPI server
 python src/main.py
 ```
+
+## Conceptual Understanding
+
+### What is the OpenServ API?
+
+An OpenServ API is a RESTful API that allows you to create and manage agents on the OpenServ platform. It provides a standardized way to interact with the OpenServ platform through a HTTP request.
+
+- Receive and process tasks dynamically
+- Respond to chat messages
+- Interact with the OpenServ platform through a standardized API
+- Leverage AI capabilities to complete assigned objectives
+
+### Key Components of This Implementation
+
+Our Python agent demonstrates several critical aspects of agent development:
+
+1. **Task Handling**: Ability to receive, process, and complete complex tasks
+2. **Chat Interaction**: Manage conversational interfaces
+3. **File Management**: Upload and handle file-based outputs
+4. **Secure Communication**: Implement SSL and API security
+5. **Asynchronous Processing**: Manage concurrent operations
+
+## Technical Architecture
+
+### Project Structure Explained
+
+```
+python-api-agent-example/
+├── src/
+│   ├── __init__.py          # Package initialization
+│   ├── main.py              # FastAPI application entry point
+│   ├── api.py               # API client configuration
+│   ├── do_task.py           # Task handling implementation
+│   └── respond_chat_message.py  # Chat message handling
+└── requirements.txt         # Python dependencies
+```
+
+#### Deep Dive into Components
+
+1. **`main.py`**: 
+   - Serves as the primary application entry point
+   - Configures FastAPI server
+   - Sets up endpoint routes for task and chat interactions
+
+2. **`api.py`**: 
+   - Manages API client configuration
+   - Handles secure communication with OpenServ platform
+   - Implements SSL certificate management
+   - Provides utility methods for API interactions
+
+3. **`do_task.py`**: 
+   - Implements core task processing logic
+   - Handles task reception, processing, and completion
+   - Uses OpenAI API for task resolution
+
+4. **`respond_chat_message.py`**: 
+   - Manages incoming chat messages
+   - Generates contextually appropriate responses
+   - Maintains conversation state and context
 
 ## Key Implementation Highlights
 
