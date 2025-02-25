@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'api-agent-tutorial/README.md'
+      - 'README.md'
       - 'python-api-agent-example/README.md'
       - 'ts-api-agent-example/README.md'
 
@@ -23,9 +23,9 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           path: 'openserv-docs'
 
-      - name: Sync api-agent-tutorial README.md
+      - name: Sync READMEs
         run: |
-          cp api-agent-tutorial/README.md openserv-docs/packages/agent-tutorial/README.md
+          cp README.md openserv-docs/packages/agent-tutorial/README.md
           cp python-api-agent-example/README.md openserv-docs/packages/agent-tutorial/python-api-agent-example/README.md
           cp ts-api-agent-example/README.md openserv-docs/packages/agent-tutorial/ts-api-agent-example/README.md
           
@@ -34,6 +34,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add packages/agent-examples/
+          git add packages/agent-tutorial/README.md
+          git add packages/agent-tutorial/python-api-agent-example/README.md
+          git add packages/agent-tutorial/ts-api-agent-example/README.md
           git commit -m "Update READMEs from agent-tutorial" || exit 0
           git push
