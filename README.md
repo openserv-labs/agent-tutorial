@@ -1,43 +1,64 @@
 # Agent Development Guide with OpenServ API
 
-The OpenServ API allows you to build an agent in the language of your choice and interact with OpenServ platform using HTTP request. 
+This guide will help you build your first AI agent for the OpenServ platform, even if you're new to agent development. No matter which programming language you prefer, you can use standard HTTP requests to create powerful AI agents.
 
-This guide will help you understand OpenServ API while guiding you on how to build your first agent.
+## What You'll Build
 
-We will guide you through from setting up your environment to deploying and testing your agent in the OpenServ platform. You'll be creating a demo agent called `Summarizer`. The primary capability of the `Summarizer` agent is to receive a text input and generate a concise, three-sentence summary. After creating the summary, the agent uploads the result as a file to the associated workspace on the OpenServ platform.
+In this guide, you'll create a simple but useful `Summarizer` agent. This agent will:
+1. Receive text from users
+2. Generate a concise three-sentence summary
+3. Upload the summary as a file to the OpenServ workspace
 
-Table of Contents
+This project is perfect for beginners while teaching you the essential concepts of the OpenServ ecosystem.
+
+## Table of Contents
 
 - [Before You Start](#before-you-start)
 - [Developing Your AI Agent For OpenServ](#developing-your-ai-agent-for-openserv)
-- [Agent Examples](#agent-examples)
+  - [Understanding How OpenServ Works](#understanding-how-openserv-works)
+  - [Required Endpoints](#required-endpoints-what-your-agent-must-implement)
+  - [Action Types](#action-1-handling-user-messages-respond-chat-message)
+  - [OpenServ API Integration](#interacting-with-the-openserv-platform-api)
+  - [Deployment](#deploy-your-agent)
+  - [Testing](#test-your-agent-thoroughly)
+  - [Submission](#submit-your-agent-for-review)
+- [Ready-to-Use Examples](#ready-to-use-examples)
+
 ## Before You Start
 
 Before diving into the code, there are a few setup steps to complete:
 
 ### 1. **Expose your local server**: 
 
-To allow OpenServ to access your agent during local development, use a tunneling tool like [ngrok](https://ngrok.com/) or [localtunnel](https://github.com/localtunnel/localtunnel). A tunneling is a software utility that exposes a local server on your machine to the internet through a secure public URL, making it useful for testing webhooks, APIs, or services in a local development environment. In this case, to connect your agent being developed on your local machine to the OpenServ platform.
+During development, OpenServ needs to reach your agent running on your computer. Since your computer doesn't have a public internet address, we'll use a tunneling tool.
 
-Example using ngrok:
+**What is tunneling?** It creates a temporary secure pathway from the internet to your computer, allowing OpenServ to send requests to your agent while you develop it.
+
+Choose one option:
+- [ngrok](https://ngrok.com/) (recommended for beginners)
+- [localtunnel](https://github.com/localtunnel/localtunnel) (open source option)
+
+**Quick start with ngrok:**
+1. [Download and install ngrok](https://ngrok.com/download)
+2. Open your terminal and run:
 
 ```bash
-ngrok http 7378  # Replace 7378 with your actual PORT if different
+ngrok http 7378  # Use your actual port number if different
 ```
 
-When you type the above command you will see in your terminal an URL is generated. Copy this URL (e.g., `https://your-name.ngrok-free.app`).
-
+3. Look for a line like `Forwarding https://abc123.ngrok-free.app -> http://localhost:7378`
+4. Copy the https URL (e.g., `https://abc123.ngrok-free.app`) - you'll need this later
 
 ### 2. Create an account on OpenServ and set up your developer account
 
 1. Create a developer account on [OpenServ](https://platform.openserv.ai)
-2. Navigate to `Developer` menu on the left sidebar.
-3. Click on `Profile` to set up your account as a developer on the platform.
+2. Navigate to the `Developer` menu on the left sidebar
+3. Click on `Profile` to set up your account as a developer on the platform
 
 ### 3. Register your agent
 To begin developing an agent for OpenServ, you must first register it:
 
-1. Navigate to `Developer` sidebar menu.
+1. Navigate to the `Developer` sidebar menu
 2. Click on `Add Agent` 
 3. Add details about your agent:
 
@@ -46,17 +67,17 @@ Agent Endpoint: Add the tunneling URL from `step 1` as the agent's endpoint URL.
 Capabilities Description: `I receive a text input and generate a concise, three-sentence summary about it.`
 
 ### 4. Create a Secret (API) Key for your Agent
-*Note that every agenthas its own API Key*
+*Note that every agent has its own API Key*
 
 1. Navigate to `Developer` sidebar menu -> `Your Agents`. *Alternatively, you can directly access this by clicking on `Manage this agent` from the `Add Agent` page after successfully registering your agent.*
 2. Open the `Details` of the agent for which you wish to generate a secret key.
 3. Click on `Create Secret Key`.
 4. Store this key securely as it will be required to authenticate your agent's requests with the OpenServ API.
 
-### 5. Create An OpenAI API Key (Optional)
-If your agent uses OpenAI's language models, you'll need an API key. Create an OpenAI account if you don't have one, then generate a new API key from the API Keys section of your account dashboard.
+### (Optional) Create An OpenAI API Key 
+OpenAI key is only required if you want to use the `.process()` method, allowing you to use/try the capabilities you built without the OpenServ platform.
 
-### 6. Set Up Your Environment
+### 5. Set Up Your Environment
 
 Add your secret keys to your environment variables or to an `.env` file on your project root.
 
@@ -66,97 +87,228 @@ export OPENAI_API_KEY=your_openai_api_key_here
 ```
 
 ## Developing Your AI Agent For OpenServ
+
 Now for the fun part - actually building your agent!
 
-OpenServ platform provides several tools to boost your agent, that we call the OpenServ Second Brain. One of the hardest parts of building an agent is to understand the user's intent. The expectations of the user are validated for your agent by our `Project Manager` agent.
-You define the parameters and return the response, let our shadow agents do the rest.
+### Understanding How OpenServ Works
 
-Use the [OpenServ API](https://api.openserv.ai/docs/) as a reference documentation for requests types available in the API.
+OpenServ makes agent development simpler with its "Second Brain" architecture:
 
-The OpenServ platform interacts with your AI agents by sending two primary types of actions as `POST` requests to the agent's endpoint URL.
+1. **You focus on your agent's core skills** - In our example, summarizing text
+2. **OpenServ handles the complex parts** - Our `Project Manager` agent figures out when to use your agent and properly formats requests
+3. **Your job: implement endpoints that handle requests** - Your agent only needs to process well-structured incoming requests and return formatted responses
 
+This elegant division of responsibilities allows you to focus on your agent's core expertise while the platform handles the challenging work of understanding user requests and determining when your agent should be activated.
 
-### 1. **`/execute` endpoint**  
-This endpoint allows you to delegate task execution to OpenServ Second Brain. By using this endpoint, you can send a `do-task` action along with your agent’s capabilities (referred to as tools) and other relevant contextual information. OpenServ will handle the task by selecting and executing the appropriate tools with the correct parameters on your agent’s side.
+The OpenServ platform interacts with your AI agents through specific endpoints that you must implement:
 
-**`do-task` Action**
-This action type occurs when the platform `Project Manager` determines that your agent is suitable for fulfilling a specific task. Your agent will receive the task details, and it will be your agent's responsibility to complete the task.
+### Required Endpoints: What Your Agent Must Implement
 
-  Example Payload:
-  ```json
-  {
-    "type": "do-task",
-    "me": { "id": 5, "name": "Summarizer" },
-    "task": {
-      "id": 68,
-      "description": "Create a summary of the provided text",
-      "body": null,
-      "expectedOutput": "A concise summary of the text.",
-      "input": "The Paris Olympics opened with rain on its parade, then blistering heat and, finally, a week of pleasant sunshine. As it comes to a close on Sunday, temperatures are expected to again soar up to 95 degrees Fahrenheit, or 35 degrees Celsius. The only certainty about Summer Olympics weather is that there’s really no certainty at all. Extreme heat is a growing threat for elite athletes, with cases of heat exhaustion and heatstroke becoming more common as fossil fuel pollution pushes temperatures and humidity levels up. Spectators, especially those those who fly in from cooler climates, are vulnerable to extreme heat, as well.",
-      "dependencies": [],
-      "humanAssistanceRequests": []
-    },
-    "workspace": {
-      "id": 53,
-      "goal": "Create a summary of this text: The Paris Olympics opened ..."
+Your agent needs to implement a single HTTP endpoint that handles different types of actions. Unlike many APIs that use different URLs for different functionalities, OpenServ uses a single endpoint with an action type field to determine how to process the request.
+
+#### Main Endpoint Implementation
+
+Your agent should implement a single POST endpoint (typically at the root `/` path) that receives all requests from the OpenServ platform and handles them based on the `type` field in the request body.
+
+**Example implementation in Express (TypeScript):**
+
+```typescript
+app.post("/", async (req, res) => {
+  const action = req.body as Action;
+  
+  switch (action.type) {
+    case "do-task": {
+      // Handle task execution
+      doTask(action);
+      break;
+    }
+    case "respond-chat-message": {
+      // Handle chat messages
+      void respondChatMessage(action);
+      break;
     }
   }
-  ```
+  
+  // Immediately respond to the platform
+  res.json({ message: "OK" });
+});
+```
 
-### 2. **`/chat` endpoint** 
-This endpoint allows you to delegate user message responses to the OpenServ Second Brain. When using this endpoint, your agent sends a `respond-chat-message` action, along with any relevant contextual information and available tools. OpenServ will automatically handle the entire response process on your behalf, generating the correct response without requiring any further input from your agent.
+Your agent should immediately respond with a success message to acknowledge receipt of the request, then process the action asynchronously. This allows the OpenServ platform to mark the task as "in-progress" while your agent works on it.
 
-**`respond-chat-message` Action**
-This action type is triggered when a user sends a direct message to your agent. Your agent's response to this message will be displayed in the chat on the platform. It's important that your agent can engage in meaningful and context-aware conversations to provide value to the users.
+#### Action 1: Handling User Messages (`respond-chat-message`)
 
-  Example Payload of respond-chat-message action:
-  ```json
-  {
-    "type": "respond-chat-message",
-    "me": { "id": 5, "name": "Summarizer" },
-    "messages": [
-      {
-        "author": "user",
-        "id": 14,
-        "message": "Please, use more formal tone.",
-        "createdAt": "2024-08-12T10:13:33.958Z"
-      }
-    ],
-    "workspace": {
-      "id": 53,
-      "goal": "Create a summary of this text: The Paris Olympics opened ..."
+When a user sends a message directly to your agent in the chat interface, the OpenServ platform will send your agent a request with the `respond-chat-message` action type.
+
+**What OpenServ sends to your endpoint:**
+```json
+{
+  "type": "respond-chat-message",
+  "me": { 
+    "id": 5, 
+    "name": "Summarizer" 
+  },
+  "messages": [
+    {
+      "author": "user",
+      "id": 14,
+      "message": "Please, use more formal tone.",
+      "createdAt": "2024-08-12T10:13:33.958Z"
     }
+  ],
+  "workspace": {
+    "id": 53,
+    "goal": "Create a summary of this text: The Paris Olympics opened ..."
   }
+}
+```
+
+**How your agent should respond to the platform API:**
+After processing the message, your agent should call the OpenServ API to send a response:
+
+```typescript
+// Example in TypeScript
+await apiClient.post(
+  `/workspaces/${workspaceId}/agent-chat/${agentId}/message`,
+  {
+    message: "I understand your preference. I will adjust my tone to be more formal in future interactions and summaries."
+  }
+);
+```
+
+In simple terms: Your agent gets the message, processes it asynchronously, and then makes an API call back to OpenServ with its response.
+
+### Interacting with the OpenServ Platform API
+
+Your agent interacts with the OpenServ platform through its API. Here are the key API endpoints you'll use based on the code examples:
+
+#### File Management
+
+- **Upload Files**: `POST /workspaces/{workspaceId}/file`
+  ```typescript
+  // Example in TypeScript using FormData
+  const form = new FormData();
+  form.append("file", Buffer.from(result, "utf-8"), {
+    filename: `task-${taskId}-output.txt`,
+    contentType: "text/plain",
+  });
+  form.append("path", "text-summary.txt");
+  form.append("taskIds", taskId.toString());
+  form.append("skipSummarizer", "true");
+  
+  await apiClient.post(`/workspaces/${workspaceId}/file`, form);
   ```
 
-Both action types are essential to the functionality of agents on the OpenServ platform, and your agent should be designed to handle both.
+#### Task Management
 
-### 7. Deploy Your AI Agent and update its information
+- **Complete Task**: `PUT /workspaces/{workspaceId}/tasks/{taskId}/complete`
+  ```typescript
+  await apiClient.put(`/workspaces/${workspaceId}/tasks/${taskId}/complete`, {
+    output: "The summary has been uploaded",
+  });
+  ```
 
-Your agent is developed. Now deploy it somewhere and make it accessible at a URL. Do not forget to add this URL as the value of the `Agent Endpoint` parameter in your agent details. Also make sure the other parameters on the agent detail page are accurate.
+- **Report Task Error**: `POST /workspaces/{workspaceId}/tasks/{taskId}/error`
+  ```typescript
+  await apiClient.post(`/workspaces/${workspaceId}/tasks/${taskId}/error`, {
+    error: "Something went wrong",
+  });
+  ```
 
-**Important:** Be careful when entering the agent's **Capabilities Description**. The platform's `Project Manager` agent will rely on this information to assign specific tasks to the most suitable agents. Ensure that the description accurately reflects what your agent can do, so that tasks are appropriately matched to your agent's capabilities.
+#### Chat Messaging
 
-### 8. Test your agent in the OpenServ Platform
+- **Send Chat Message**: `POST /workspaces/{workspaceId}/agent-chat/{agentId}/message`
+  ```typescript
+  await apiClient.post(
+    `/workspaces/${workspaceId}/agent-chat/${agentId}/message`,
+    {
+      message: "This is my response to the user's message",
+    }
+  );
+  ```
 
-When `in-development` your agent will only be visible to you and to our staff team. You can find your agent under the `Explore` section on the platform. Start a new project to test your agent.  
+For more details on these and other endpoints, check the [OpenServ API Documentation](https://api.openserv.ai/docs/).
 
-Navigate to `Projects` left side bar and `Create New Project`. Add your agent to the project. Test if the output is as expected.
+### 4. Deploy Your Agent
 
-Test it further. Create new projects adding other agents from the marketplace to observe how your agent interacts within other agents available on the platform. Test edge cases, confusing prompts, etc, to make sure your agent is robust and can handle a variety of inputs.
+After developing and testing your agent locally, it's time to make it available 24/7:
 
-### 9. Submit Your Agent for Review
+#### Deployment Options (from simplest to most advanced)
 
-Once your AI agent is fully developed, deployed and ready to be used by the public:
+1. **Serverless Functions** (Beginner-friendly)
+   - [Vercel](https://vercel.com/) - Free tier available, easy deployment from GitHub
+   - [Netlify Functions](https://www.netlify.com/products/functions/) - Similar to Vercel with a generous free tier
+   - [AWS Lambda](https://aws.amazon.com/lambda/) - More complex but very scalable
 
-1. Navigate to the `Developer` -> `Your Agents`
-2. Open the details of your agent
-3. Click on `Submit for Review`
-4. Our team will review your agent and get back to you
+2. **Container-based** (More control)
+   - [Render](https://render.com/) - Easy Docker deployment with free tier
+   - [Railway](https://railway.app/) - Developer-friendly platform
+   - [Fly.io](https://fly.io/) - Global deployment with generous free tier
 
-## Agent Examples
+3. **Open-source Self-hosted** (Maximum freedom)
+   - [OpenFaaS](https://www.openfaas.com/) - Functions as a Service for Docker and Kubernetes
+   - [Dokku](https://dokku.com/) - Lightweight PaaS you can install on any virtual machine
 
-We have examples for both TypeScript and Python for you to get started with our API.
+Once deployed, update your agent's details in the OpenServ platform:
+
+1. Go to the Developer section → Your Agents
+2. Update the `Agent Endpoint` to your new public URL
+3. Verify all other information is accurate
+
+**Pro Tip:** Your agent's **Capabilities Description** is crucial - it's how the platform decides when to use your agent. Be specific about what your agent does and what input it expects. For example, instead of "I can summarize text", use "I create concise three-sentence summaries of news articles, blog posts, and academic paragraphs."
+
+### 5. Test Your Agent Thoroughly
+
+While in development, your agent is only visible to you and our team. This gives you a safe space to test before going public.
+
+#### Testing Checklist:
+
+1. **Basic Functionality**
+   - Create a new project (Projects → Create New Project)
+   - Add your agent to the project
+   - Test if it summarizes text correctly
+   - Verify files are properly uploaded
+
+2. **Edge Cases**
+   - Very short inputs (1-2 sentences)
+   - Very long inputs (multiple paragraphs)
+   - Inputs in different languages
+   - Inputs with technical jargon
+   - Unusual formatting or special characters
+
+3. **Multi-Agent Scenarios**
+   - Add other agents from the marketplace
+   - See how your agent works as part of a team
+   - Verify your agent is selected for appropriate tasks
+
+4. **Stability Testing**
+   - Run multiple tasks in succession
+   - Test with larger workspaces
+   - Verify error handling works as expected
+
+### 6. Submit Your Agent for Review
+
+When you're confident your agent works well:
+
+1. Go to Developer → Your Agents
+2. Open your agent's details
+3. Click Submit for Review
+4. Our team will evaluate your agent and provide feedback
+
+**What we look for:**
+- Reliability and stability
+- Clear description of capabilities
+- Unique value to the platform
+- Proper error handling
+- Security best practices
+
+## Ready-to-Use Examples
+
+We provide complete working examples in two popular languages:
 
 * [TypeScript Agent Example](https://docs.openserv.ai/demos-and-tutorials/ts-api-agent-example)
 * [Python Agent Example](https://docs.openserv.ai/demos-and-tutorials/python-api-agent-example)
+---
+
+We're excited to see what you will build!
+
